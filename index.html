@@ -262,8 +262,10 @@
         .layer-list li span { color: #eee; font-size: 0.8rem; }
 
         .timeline-wrapper {
-            position: fixed; left: 50px; top: 50%; transform: translateY(-50%); height: 40vh; z-index: 20; 
-            display: flex; flex-direction: column; justify-content: space-between; opacity: 0; pointer-events: none; transition: opacity 1s ease; 
+            position: fixed; left: 50px; top: 50%; transform: translateY(-50%);
+            height: 40vh; z-index: 20; display: flex; flex-direction: column;
+            justify-content: space-between; opacity: 0; pointer-events: none;
+            transition: opacity 1s ease; 
         }
         .timeline-line { position: absolute; left: 9px; top: 0; bottom: 0; width: 2px; background: rgba(255,255,255,0.1); }
         .timeline-item { position: relative; padding-left: 30px; color: #555; transition: 0.3s; font-family: 'Oswald'; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.9rem; font-weight: 600; }
@@ -276,7 +278,7 @@
         .wheel { width: 2px; height: 6px; background: white; border-radius: 2px; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); animation: scrollWheel 2s infinite; }
         @keyframes scrollWheel { 0% { top: 6px; opacity: 1; } 100% { top: 18px; opacity: 0; } }
 
-        /* --- MOBILE ADAPTATION --- */
+        /* --- MOBILE ADAPTATION (COMPACT TEXT & MOVED HOUSE) --- */
         @media (max-width: 768px) {
             h1.main-title { font-size: 20vw; }
             .timeline-wrapper { display: none; }
@@ -284,12 +286,26 @@
             #sec-roof, #sec-walls, #sec-floor, #sec-construction, #sec-contract, #sec-blueprint, #sec-keys {
                 align-items: center; text-align: center; padding-left: 20px; padding-right: 20px;
             }
-            .feature-content { width: 100%; max-width: 400px; padding: 25px; border-left: none !important; border-top: 4px solid; }
+            
+            /* СУПЕР КОМПАКТНЫЙ ТЕКСТ ДЛЯ ТЕЛЕФОНА */
+            .feature-content { 
+                width: 90%; 
+                max-width: 350px; 
+                padding: 15px 20px; 
+                margin-bottom: 100px;
+                border-left: none !important; 
+                border-top: 4px solid; 
+                backdrop-filter: blur(8px);
+            }
+            .feature-title { font-size: 1.8rem; margin-bottom: 10px; }
+            .feature-text { font-size: 0.9rem; line-height: 1.4; margin-bottom: 10px; }
+            .layer-list li { padding: 5px 0; font-size: 0.85rem; }
+            
             #sec-roof .feature-content, #sec-walls .feature-content { border-color: #d4a373; }
             #sec-contract .feature-content { border-color: #fff; }
             #sec-blueprint .feature-content { border-color: #0088ff; }
             #sec-keys .feature-content { border-color: #ffd700; }
-            .feature-num { top: -40px; left: 50%; transform: translateX(-50%); }
+            .feature-num { top: -35px; font-size: 5rem; left: 50%; transform: translateX(-50%); }
             
             #consultation-section { padding: 60px 20px 100px 20px; margin-bottom: 80px; }
             .form-wrapper { padding: 25px; }
@@ -715,7 +731,7 @@
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.3; // Повышенная экспозиция для яркости
+        renderer.toneMappingExposure = 1.1; 
         
         container.appendChild(renderer.domElement);
 
@@ -725,14 +741,19 @@
         bloomPass.threshold = 0.85; bloomPass.strength = 0.2; bloomPass.radius = 0.5;
         composer.addPass(bloomPass);
 
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6); // Повышенная яркость
+        // ВЫНЕСЛИ ИСТОЧНИКИ СВЕТА В ПЕРЕМЕННЫЕ ДЛЯ УПРАВЛЕНИЯ В onResize
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.4); 
         scene.add(ambientLight);
-        const sunLight = new THREE.DirectionalLight(0xffeebb, 1.5); // Повышенная яркость
+        
+        const sunLight = new THREE.DirectionalLight(0xffeebb, 1.3);
         sunLight.position.set(20, 30, 20); sunLight.castShadow = true; sunLight.shadow.mapSize.width = 2048; sunLight.shadow.mapSize.height = 2048; sunLight.shadow.bias = -0.0001; scene.add(sunLight);
-        const rimLight = new THREE.SpotLight(0xaaccff, 2.5); rimLight.position.set(-20, 10, -20); rimLight.lookAt(0, 0, 0); scene.add(rimLight);
+        
+        const rimLight = new THREE.SpotLight(0xaaccff, 2.5); 
+        rimLight.position.set(-20, 10, -20); rimLight.lookAt(0, 0, 0); scene.add(rimLight);
+        
         const innerLight = new THREE.PointLight(0xffaa55, 0.5, 10); innerLight.position.set(0, 2, 0); scene.add(innerLight);
 
-        // --- HOUSE GEOMETRY ---
+        // --- HOUSE GEOMETRY (Standard setup) ---
         const houseGroup = new THREE.Group(); scene.add(houseGroup); houseGroup.visible = false; houseGroup.position.y = -15; 
         const blueprintGroup = new THREE.Group(); scene.add(blueprintGroup); blueprintGroup.visible = false;
         const contractGroup = new THREE.Group(); scene.add(contractGroup); contractGroup.visible = false;
@@ -841,9 +862,6 @@
         tl.call(() => { houseGroup.visible = true; }, null, "intro");
         tl.to("#rays-container", { opacity: 0.45, duration: 4, ease: "power2.inOut" }, "intro");
         tl.to(".hero-content", { y: -300, opacity: 0, duration: 4, ease: "power2.inOut" }, "intro");
-        
-        // ИЗМЕНЕНО: Дом стартует очень низко (-50) и поднимается лишь до -5
-        // Это гарантирует, что на первом экране он скрыт
         tl.fromTo(houseGroup.position, { y: -50 }, { y: -5, duration: 4, ease: "power2.out" }, "intro");
         tl.fromTo(houseGroup.scale, { x: 0.5, y: 0.5, z: 0.5 }, { x: 1, y: 1, z: 1, duration: 4 }, "intro");
         tl.fromTo(houseGroup.rotation, { y: 0 }, { y: -Math.PI / 6, duration: 5, ease: "power1.inOut" }, "intro");
@@ -931,25 +949,42 @@
         }
         animate();
 
-        // === JS АДАПТИВНОСТЬ КАМЕРЫ ===
+        // === JS АДАПТИВНОСТЬ КАМЕРЫ (С УПРАВЛЕНИЕМ СВЕТОМ) ===
         function onResize() {
             const width = window.innerWidth;
             const height = window.innerHeight;
             const aspect = width / height;
+
             camera.aspect = aspect;
             camera.updateProjectionMatrix();
+            
             renderer.setSize(width, height);
             composer.setSize(width, height);
-            camera.clearViewOffset(); // Очистка для корректного пересчета
+
+            camera.clearViewOffset();
+
             if (aspect < 1.0) {
-                camera.position.z = 85; // Дистанция для мобилок
+                // --- MOBILE ---
+                camera.position.z = 85; 
                 camera.position.y = 5;
                 camera.setViewOffset(width, height, 0, height * 0.15, width, height);
+
+                // Усиливаем свет для мобилок
+                ambientLight.intensity = 0.7; // Ярче тени
+                sunLight.intensity = 2.0;     // Ярче солнце
+                rimLight.intensity = 4.0;     // Ярче контур
             } else {
-                camera.position.z = 35; // Дистанция для ПК
+                // --- DESKTOP ---
+                camera.position.z = 35;
                 camera.position.y = 2;
+
+                // Возвращаем исходный кинематографичный свет
+                ambientLight.intensity = 0.4;
+                sunLight.intensity = 1.3;
+                rimLight.intensity = 2.5;
             }
         }
+
         window.addEventListener('resize', onResize);
         onResize();
 
@@ -994,6 +1029,34 @@
                 list.classList.remove('active');
             }
         };
+
+        // --- DOCK ANIMATION LOGIC ---
+        const dockWrapper = document.querySelector('.dock-wrapper');
+        const dockItems = document.querySelectorAll('.dock-item');
+        const baseWidth = 50;
+        const maxScale = 1.8; 
+        const range = 150;
+
+        if(window.matchMedia("(min-width: 769px)").matches) {
+            dockWrapper.addEventListener('mousemove', (e) => {
+                const mouseX = e.clientX;
+                dockItems.forEach(item => {
+                    const rect = item.getBoundingClientRect();
+                    const centerX = rect.left + rect.width / 2;
+                    const dist = Math.abs(mouseX - centerX);
+                    let scale = 1;
+                    if (dist < range) { scale = 1 + (maxScale - 1) * (1 - dist / range); }
+                    item.style.width = `${baseWidth * scale}px`;
+                    item.style.height = `${baseWidth * scale}px`;
+                });
+            });
+            dockWrapper.addEventListener('mouseleave', () => {
+                dockItems.forEach(item => {
+                    item.style.width = `${baseWidth}px`;
+                    item.style.height = `${baseWidth}px`;
+                });
+            });
+        }
 
     })();
     </script>
