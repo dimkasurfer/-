@@ -9,12 +9,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
 
-    <!-- Three.js & GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
-    <!-- Postprocessing -->
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
@@ -39,7 +37,7 @@
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: 1; 
             pointer-events: none;
-            opacity: 0;
+            opacity: 0; /* Скрыты по умолчанию */
         }
 
         /* --- 3D SECTION --- */
@@ -189,74 +187,27 @@
         }
         .submit-btn:hover { background: #fff; box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); }
 
-        /* --- DOCK PANEL (NEW) --- */
+        /* --- DOCK PANEL --- */
         .dock-wrapper {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 100; /* Самый верхний слой */
-            display: flex;
-            align-items: flex-end;
-            gap: 12px;
-            padding: 10px 15px;
-            background: rgba(6, 0, 16, 0.6); /* Темный полупрозрачный фон */
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 100;
+            display: flex; align-items: flex-end; gap: 12px; padding: 10px 15px;
+            background: rgba(6, 0, 16, 0.6); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
-
         .dock-item {
-            width: 50px; /* Базовый размер */
-            height: 50px;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            position: relative;
-            transition: width 0.1s ease-out, height 0.1s ease-out, transform 0.1s ease-out, background 0.3s;
-            color: #fff;
+            width: 50px; height: 50px; border-radius: 12px; background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center;
+            cursor: pointer; position: relative; transition: width 0.1s ease-out, height 0.1s ease-out, transform 0.1s ease-out, background 0.3s; color: #fff;
         }
-
-        .dock-item:hover {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: #d4a373;
-            color: #d4a373;
-        }
-
-        .dock-item svg {
-            width: 50%;
-            height: 50%;
-            pointer-events: none;
-        }
-
-        /* Tooltip для дока */
+        .dock-item:hover { background: rgba(255, 255, 255, 0.15); border-color: #d4a373; color: #d4a373; }
+        .dock-item svg { width: 50%; height: 50%; pointer-events: none; }
         .dock-tooltip {
-            position: absolute;
-            top: -40px;
-            left: 50%;
-            transform: translateX(-50%) translateY(10px);
-            background: #060010;
-            border: 1px solid #333;
-            padding: 5px 10px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            color: #fff;
-            opacity: 0;
-            pointer-events: none;
-            transition: 0.2s;
-            white-space: nowrap;
-            font-family: 'Manrope', sans-serif;
+            position: absolute; top: -40px; left: 50%; transform: translateX(-50%) translateY(10px);
+            background: #060010; border: 1px solid #333; padding: 5px 10px; border-radius: 6px;
+            font-size: 0.8rem; color: #fff; opacity: 0; pointer-events: none; transition: 0.2s; white-space: nowrap; font-family: 'Manrope', sans-serif;
         }
-
-        .dock-item:hover .dock-tooltip {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
+        .dock-item:hover .dock-tooltip { opacity: 1; transform: translateX(-50%) translateY(0); }
 
         /* --- UI ELEMENTS --- */
         .hero-section, .feature-section {
@@ -272,19 +223,11 @@
 
         h1.main-title { 
             font-family: 'Oswald', sans-serif; 
-            font-size: 18vw; 
-            line-height: 1.0; 
-            margin: 0; text-transform: uppercase; font-weight: 700; 
-            letter-spacing: 0.05em;
-            padding-bottom: 10px;
-            
+            font-size: 18vw; line-height: 1.0; margin: 0; text-transform: uppercase; font-weight: 700; 
+            letter-spacing: 0.05em; padding-bottom: 10px;
             background: linear-gradient(120deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.8) 40%, #fff 50%, rgba(255,255,255,0.8) 60%, rgba(255,255,255,0.8) 100%);
-            background-size: 300% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine 5s linear infinite;
+            background-size: 300% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shine 5s linear infinite;
         }
-
         @keyframes shine { 0% { background-position: 0% 50%; } 100% { background-position: 300% 50%; } }
         
         p.slogan { font-size: 1.2rem; margin-top: 20px; font-weight: 300; letter-spacing: 0.5em; text-transform: uppercase; color: #bbb; padding: 0 20px; }
@@ -309,7 +252,6 @@
         #sec-floor .feature-content, #sec-construction .feature-content { border-left: none; border-top: 4px solid #d4a373; }
         #sec-contract .feature-content { border-left: 4px solid #fff; }
         #sec-blueprint .feature-content { border-left: 4px solid #0088ff; }
-        
         .feature-num { font-family: 'Oswald'; font-size: 6rem; line-height: 1; color: rgba(255,255,255,0.1); position: absolute; top: -30px; left: -20px; font-weight: 700; z-index: -1; }
         #sec-blueprint .feature-num { color: rgba(0, 136, 255, 0.1); }
         .feature-title { font-family: 'Oswald', sans-serif; font-size: 2.5rem; margin: 0 0 20px 0; color: #fff; line-height: 1.0; text-transform: uppercase; letter-spacing: 0.02em; position: relative; }
@@ -320,10 +262,8 @@
         .layer-list li span { color: #eee; font-size: 0.8rem; }
 
         .timeline-wrapper {
-            position: fixed; left: 50px; top: 50%; transform: translateY(-50%);
-            height: 40vh; z-index: 20; display: flex; flex-direction: column;
-            justify-content: space-between; opacity: 0; pointer-events: none;
-            transition: opacity 1s ease; 
+            position: fixed; left: 50px; top: 50%; transform: translateY(-50%); height: 40vh; z-index: 20; 
+            display: flex; flex-direction: column; justify-content: space-between; opacity: 0; pointer-events: none; transition: opacity 1s ease; 
         }
         .timeline-line { position: absolute; left: 9px; top: 0; bottom: 0; width: 2px; background: rgba(255,255,255,0.1); }
         .timeline-item { position: relative; padding-left: 30px; color: #555; transition: 0.3s; font-family: 'Oswald'; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.9rem; font-weight: 600; }
@@ -353,7 +293,6 @@
             
             #consultation-section { padding: 60px 20px 100px 20px; margin-bottom: 80px; }
             .form-wrapper { padding: 25px; }
-            
             .dock-wrapper { gap: 8px; padding: 8px 12px; bottom: 10px; }
             .dock-item { width: 45px; height: 45px; }
         }
@@ -361,7 +300,6 @@
 </head>
 <body>
 
-    <!-- КОНТЕЙНЕР ДЛЯ ЛУЧЕЙ -->
     <div id="rays-container"></div>
 
     <div id="pin-container">
@@ -383,7 +321,6 @@
             <div class="scroll-indicator"><div class="mouse"><div class="wheel"></div></div></div>
         </section>
 
-        <!-- Контент -->
         <section class="feature-section" id="sec-roof">
             <div class="feature-content">
                 <span class="feature-num">01</span>
@@ -451,7 +388,6 @@
         </section>
     </div>
 
-    <!-- ГАЛЕРЕЯ -->
     <section id="gallery-section">
         <div class="gallery-header">
             <h2>Готовые проекты</h2>
@@ -486,7 +422,6 @@
         </div>
     </section>
 
-    <!-- ФОРМА ОБРАТНОЙ СВЯЗИ -->
     <section id="consultation-section">
         <div class="form-wrapper">
             <h2 class="form-title">Получить консультацию</h2>
@@ -515,31 +450,25 @@
         </div>
     </section>
 
-    <!-- ДОК ПАНЕЛЬ (НОВАЯ) -->
     <div class="dock-wrapper" id="dock">
-        <!-- ГЛАВНАЯ -->
         <div class="dock-item" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
             <div class="dock-tooltip">Главная</div>
         </div>
-        <!-- ГАЛЕРЕЯ -->
         <div class="dock-item" onclick="document.getElementById('gallery-section').scrollIntoView({behavior: 'smooth'})">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
             <div class="dock-tooltip">Проекты</div>
         </div>
-        <!-- О НАС (3D ЭТАПЫ) -->
         <div class="dock-item" onclick="document.getElementById('sec-roof').scrollIntoView({behavior: 'smooth'})">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
             <div class="dock-tooltip">Технологии</div>
         </div>
-        <!-- КОНТАКТЫ -->
         <div class="dock-item" onclick="document.getElementById('consultation-section').scrollIntoView({behavior: 'smooth'})">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
             <div class="dock-tooltip">Контакты</div>
         </div>
     </div>
 
-    <!-- СКРИПТ 1: LIGHT RAYS -->
     <script type="module">
         import { Renderer, Program, Triangle, Mesh } from 'https://esm.sh/ogl@0.0.96';
 
@@ -708,7 +637,6 @@
         }
     </script>
 
-    <!-- СКРИПТ 2: ОСНОВНОЙ САЙТ (THREE.JS) -->
     <script>
     (() => {
         // --- 3D & TEXTURE SETUP ---
@@ -787,7 +715,7 @@
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.1; 
+        renderer.toneMappingExposure = 1.3; // Повышенная экспозиция для яркости
         
         container.appendChild(renderer.domElement);
 
@@ -797,8 +725,10 @@
         bloomPass.threshold = 0.85; bloomPass.strength = 0.2; bloomPass.radius = 0.5;
         composer.addPass(bloomPass);
 
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.4); scene.add(ambientLight);
-        const sunLight = new THREE.DirectionalLight(0xffeebb, 1.3); sunLight.position.set(20, 30, 20); sunLight.castShadow = true; sunLight.shadow.mapSize.width = 2048; sunLight.shadow.mapSize.height = 2048; sunLight.shadow.bias = -0.0001; scene.add(sunLight);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6); // Повышенная яркость
+        scene.add(ambientLight);
+        const sunLight = new THREE.DirectionalLight(0xffeebb, 1.5); // Повышенная яркость
+        sunLight.position.set(20, 30, 20); sunLight.castShadow = true; sunLight.shadow.mapSize.width = 2048; sunLight.shadow.mapSize.height = 2048; sunLight.shadow.bias = -0.0001; scene.add(sunLight);
         const rimLight = new THREE.SpotLight(0xaaccff, 2.5); rimLight.position.set(-20, 10, -20); rimLight.lookAt(0, 0, 0); scene.add(rimLight);
         const innerLight = new THREE.PointLight(0xffaa55, 0.5, 10); innerLight.position.set(0, 2, 0); scene.add(innerLight);
 
@@ -911,7 +841,10 @@
         tl.call(() => { houseGroup.visible = true; }, null, "intro");
         tl.to("#rays-container", { opacity: 0.45, duration: 4, ease: "power2.inOut" }, "intro");
         tl.to(".hero-content", { y: -300, opacity: 0, duration: 4, ease: "power2.inOut" }, "intro");
-        tl.fromTo(houseGroup.position, { y: -15 }, { y: -1, duration: 4, ease: "power2.out" }, "intro");
+        
+        // ИЗМЕНЕНО: Дом стартует очень низко (-50) и поднимается лишь до -5
+        // Это гарантирует, что на первом экране он скрыт
+        tl.fromTo(houseGroup.position, { y: -50 }, { y: -5, duration: 4, ease: "power2.out" }, "intro");
         tl.fromTo(houseGroup.scale, { x: 0.5, y: 0.5, z: 0.5 }, { x: 1, y: 1, z: 1, duration: 4 }, "intro");
         tl.fromTo(houseGroup.rotation, { y: 0 }, { y: -Math.PI / 6, duration: 5, ease: "power1.inOut" }, "intro");
         tl.addLabel("rotation_done");
@@ -998,6 +931,7 @@
         }
         animate();
 
+        // === JS АДАПТИВНОСТЬ КАМЕРЫ ===
         function onResize() {
             const width = window.innerWidth;
             const height = window.innerHeight;
@@ -1006,47 +940,18 @@
             camera.updateProjectionMatrix();
             renderer.setSize(width, height);
             composer.setSize(width, height);
+            camera.clearViewOffset(); // Очистка для корректного пересчета
             if (aspect < 1.0) {
-                camera.position.z = 65; camera.position.y = 5;
+                camera.position.z = 85; // Дистанция для мобилок
+                camera.position.y = 5;
+                camera.setViewOffset(width, height, 0, height * 0.15, width, height);
             } else {
-                camera.position.z = 35; camera.position.y = 2;
+                camera.position.z = 35; // Дистанция для ПК
+                camera.position.y = 2;
             }
         }
         window.addEventListener('resize', onResize);
         onResize();
-
-        // --- DOCK ANIMATION LOGIC ---
-        const dockWrapper = document.querySelector('.dock-wrapper');
-        const dockItems = document.querySelectorAll('.dock-item');
-        const baseWidth = 50;
-        const maxScale = 1.8; 
-        const range = 150;
-
-        if(window.matchMedia("(min-width: 769px)").matches) {
-            dockWrapper.addEventListener('mousemove', (e) => {
-                const mouseX = e.clientX;
-                dockItems.forEach(item => {
-                    const rect = item.getBoundingClientRect();
-                    const centerX = rect.left + rect.width / 2;
-                    const dist = Math.abs(mouseX - centerX);
-                    
-                    let scale = 1;
-                    if (dist < range) {
-                        scale = 1 + (maxScale - 1) * (1 - dist / range); 
-                    }
-                    
-                    item.style.width = `${baseWidth * scale}px`;
-                    item.style.height = `${baseWidth * scale}px`;
-                });
-            });
-
-            dockWrapper.addEventListener('mouseleave', () => {
-                dockItems.forEach(item => {
-                    item.style.width = `${baseWidth}px`;
-                    item.style.height = `${baseWidth}px`;
-                });
-            });
-        }
 
         // --- PHONE SELECTOR LOGIC ---
         const countries = [
@@ -1094,4 +999,3 @@
     </script>
 </body>
 </html>
-```
